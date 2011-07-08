@@ -16,7 +16,7 @@ namespace :acts_as_activecomplete do
       for post in Post.all
         words = post.body.split( " " )
         for word in words
-          puts word
+          
 =begin
             @word = Word.find( :first, :conditions => "text = '#{word}'" )
             
