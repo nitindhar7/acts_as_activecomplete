@@ -12,7 +12,8 @@ Resources
 Usage
 =====
 
-*Setup*
+Setup
+-----
 
     class Product
         acts_as_activecomplete :name, :description
@@ -20,5 +21,5 @@ Usage
     
     rake activecomplete:setup
 
-
+===========================================================
 Copyright © 2011 Nitin Dhar, released under the MIT license
