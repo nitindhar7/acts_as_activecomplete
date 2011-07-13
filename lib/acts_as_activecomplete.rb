@@ -1,1 +1,1 @@
-# ActsAsActivecomplete
+require "acts_as_activecomplete/acts_as_activecomplete"
