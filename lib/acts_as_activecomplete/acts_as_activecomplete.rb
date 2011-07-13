@@ -11,14 +11,22 @@ module ActsAsActiveomplete
     end
     
     def create_words
-      File.open "#{Rails.root}/tmp/#{self.downcase}_words.activecomplete", "w"
+      @words = File.open( "#{Rails.root}/tmp/#{self}_words.activecomplete", "w" )
       for field in self.activecompleted_fields
-        
+        corpus = self.send :find, :all, :select => field
+        for document in corpus
+          # to access the column: document.send field
+
+          # TODO
+          # (1) parse document
+          # (2) generate stats
+          # (3) create divides between each field
+        end
       end
     end
     
     def create_correlations
-      File.open "#{Rails.root}/tmp/#{self.downcase}_correlations.activecomplete", "w"
+      File.open( "#{Rails.root}/tmp/#{self.downcase}_correlations.activecomplete", "w" )
     end
   end
 
