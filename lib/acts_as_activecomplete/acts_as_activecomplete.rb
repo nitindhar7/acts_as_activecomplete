@@ -11,7 +11,7 @@ module ActsAsActiveomplete
     end
     
     def create_words
-      @words = File.open( "#{Rails.root}/tmp/#{self}_words.activecomplete", "w" )
+      @words = File.open( "#{Rails.root}/tmp/#{self.to_s.downcase}_words.activecomplete", "w" )
       for field in self.activecompleted_fields
         corpus = self.send :find, :all, :select => field
         for document in corpus
@@ -19,6 +19,8 @@ module ActsAsActiveomplete
 
           # TODO
           # (1) parse document
+          line = document.send field
+          terms = line.split( " " )
           # (2) generate stats
           # (3) create divides between each field
         end
