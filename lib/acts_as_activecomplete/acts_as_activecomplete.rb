@@ -4,9 +4,9 @@ module ActsAsActiveomplete
   end
 
   module ClassMethods
-    class Parser
-      def parse(line)
-        line.split( " " )
+    class ActsAsActivecomplete
+      def insert(file, word)
+        
       end
     end
     
@@ -17,15 +17,16 @@ module ActsAsActiveomplete
     end
     
     def create_words
-      @parser = Parser.new
+      @ac = ActsAsActivecomplete.new
       @words = File.open( "#{Rails.root}/tmp/#{self.to_s.downcase}_words.ac", "w" )
       for field in self.activecompleted_fields
         corpus = self.send :find, :all, :select => field
         for document in corpus
-          @parser.parse( document.send field )
+          line = document.send( field )
+          terms = line.split( " " )
           
           for word in terms
-            @words.puts word
+            @ac.insert( @words, word )
           end
           
           # (2) generate stats
