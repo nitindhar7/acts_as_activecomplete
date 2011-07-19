@@ -4,6 +4,12 @@ module ActsAsActiveomplete
   end
 
   module ClassMethods
+    class Parser
+      def parse(line)
+        line.split( " " )
+      end
+    end
+    
     def acts_as_activecomplete(*options)
       cattr_accessor :activecompleted_fields
       self.activecompleted_fields = options
@@ -11,16 +17,17 @@ module ActsAsActiveomplete
     end
     
     def create_words
-      @words = File.open( "#{Rails.root}/tmp/#{self.to_s.downcase}_words.activecomplete", "w" )
+      @parser = Parser.new
+      @words = File.open( "#{Rails.root}/tmp/#{self.to_s.downcase}_words.ac", "w" )
       for field in self.activecompleted_fields
         corpus = self.send :find, :all, :select => field
         for document in corpus
-          # to access the column: document.send field
-
-          # TODO
-          # (1) parse document
-          line = document.send field
-          terms = line.split( " " )
+          @parser.parse( document.send field )
+          
+          for word in terms
+            @words.puts word
+          end
+          
           # (2) generate stats
           # (3) create divides between each field
         end
